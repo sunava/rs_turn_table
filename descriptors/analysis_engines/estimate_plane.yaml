@@ -1,0 +1,26 @@
+ae:
+  name: estimate_plane
+fixedflow:
+- CollectionReader
+- ImagePreprocessor
+- PointCloudFilter
+- PlaneAnnotator
+
+CollectionReader:
+  camera_config_files: ['config_realSense.ini']
+
+PointCloudFilter:
+  minX: -0.12
+  maxX: 0.32
+  minY: -0.52
+  maxY: 0.52
+  minZ: 0.0
+  maxZ: 0.82
+  transform_cloud: false
+
+PlaneAnnotator:
+  save_to_file: true
+  horizontal: true
+  min_plane_inliers: 1000
+  distance_threshold: 0.004
+

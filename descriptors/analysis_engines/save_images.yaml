@@ -1,0 +1,35 @@
+ae:
+  name: save_images
+fixedflow:
+- CollectionReader
+- ImagePreprocessor
+- PointCloudFilter
+- PlaneAnnotator
+- PointCloudClusterExtractor
+- SaveClusterCloudsAndImages
+
+CollectionReader:
+  camera_config_files: ['config_realSense.ini']
+
+PointCloudFilter:
+  minX: -0.12
+  maxX: 0.32
+  minY: -0.52
+  maxY: 0.52
+  minZ: 0.0
+  maxZ: 0.82
+  transform_cloud: false
+
+PlaneAnnotator:
+  horizontal: true
+
+SaveClusterCloudsAndImages:
+  objectName: 'GarnierMineralUltraDr'
+  cameraConfig: 'RealSense'
+
+#PointCloudClusterExtractor:
+#  polygon_min_height: 0.01
+#  polygon_max_height: 9.0
+#  cluster_tolerance: 0.8
+#  cluster_min_size: 4000
+#  cluster_max_size: 60000
