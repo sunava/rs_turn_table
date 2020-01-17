@@ -91,7 +91,7 @@ public:
             ctx.extractValue("padding", padding);
         }
 
-        rosPath = ros::package::getPath("rs_hsrb_perception");
+        rosPath = ros::package::getPath("rs_turn_table");
 
         fullPath = rosPath + "/data/" + objectName;
 
@@ -135,19 +135,11 @@ public:
         rs::Scene scene = cas.getScene();
         std::vector<rs::ObjectHypothesis> clusters;
         pcl::PointCloud<pcl::PointXYZRGBA>::Ptr cloudPtr(new pcl::PointCloud<pcl::PointXYZRGBA>());
-        if((cameraConfig.compare("Kinect")) > 0) {
-            cas.get(VIEW_COLOR_IMAGE, color);
-            cas.get(VIEW_DEPTH_IMAGE, depth);
-            cas.get(VIEW_CLOUD, *cloudPtr)
-        }
-
-        if((cameraConfig.compare("Kinect")) == 0) {
-            cas.get(VIEW_COLOR_IMAGE_HD, color);
-            cas.get(VIEW_DEPTH_IMAGE_HD, depth);
-            cas.get(VIEW_CLOUD, *cloudPtr)
-        }
-
-        else outError("Please set the camera config correctly" + cameraConfig);
+ 
+        cas.get(VIEW_COLOR_IMAGE_HD, color);
+        cas.get(VIEW_DEPTH_IMAGE_HD, depth);
+        cas.get(VIEW_CLOUD, *cloudPtr);
+        
 
         scene.identifiables.filter(clusters);
         if(clusters.size() == 1)
@@ -156,22 +148,18 @@ public:
 
             cv::Mat mask;
             cv::Rect roi;
-            rs::conversion::from(image_rois.roi(), roi);
+            rs::conversion::from(image_rois.roi_hires(), roi);
 
             roi.x -=  padding;
             roi.y -=  padding;
-            roi.height += 2 * padding;
-            roi.width +=  2 * padding;
+            roi.height += 3.5 * padding;
+            roi.width +=  3.5 * padding;
             mask = cv::Mat::zeros(roi.height,roi.width,CV_8UC1);
 
 
-            if((cameraConfig.compare("Kinect")) > 0) {
-                rs::conversion::from(image_rois.mask(), mask);
-            }
-
-            if((cameraConfig.compare("Kinect")) == 0) {
+            
                 rs::conversion::from(image_rois.mask_hires(), mask);
-            }
+
 
             std::stringstream ss_rgb;
             std::stringstream ss_depth;

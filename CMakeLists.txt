@@ -44,6 +44,11 @@ include_directories(
 generate_type_system(robosherlock)
 #find all relevant files
 find_additional_files()
+
+rs_add_library(rs_SaveClusterCloudsAndImages src/SaveClusterCloudsAndImages.cpp)
+target_link_libraries(rs_SaveClusterCloudsAndImages ${catkin_LIBRARIES})
+
+
 ################################################################################
 ## Sub Projects                                                               ##
 ################################################################################

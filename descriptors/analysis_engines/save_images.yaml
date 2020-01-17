@@ -9,23 +9,24 @@ fixedflow:
 - SaveClusterCloudsAndImages
 
 CollectionReader:
-  camera_config_files: ['config_realSense.ini']
+  camera_config_files: ['config_kinect.ini']
 
 PointCloudFilter:
-  minX: -0.12
-  maxX: 0.32
-  minY: -0.52
-  maxY: 0.52
+  transform_cloud: true
+  target_frame: 'camera_rgb_optical_frame'
+  minX: -0.5
+  maxX: 1.2
+  minY: -1.2
+  maxY: 1.2
   minZ: 0.0
-  maxZ: 0.82
-  transform_cloud: false
+  maxZ: 0.7
 
 PlaneAnnotator:
-  horizontal: true
+  plane_estimation_mode: FILE
 
 SaveClusterCloudsAndImages:
-  objectName: 'GarnierMineralUltraDr'
-  cameraConfig: 'RealSense'
+  objectName: 'FewllowesFoamCleaner'
+  cameraConfig: 'Kinect'
 
 #PointCloudClusterExtractor:
 #  polygon_min_height: 0.01
